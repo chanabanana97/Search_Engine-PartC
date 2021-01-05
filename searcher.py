@@ -1,5 +1,5 @@
-from indexer import Indexer
-from ranker import RankerGlove, Ranker
+from ranker import Ranker
+from spell_checker import Spell_Checker
 import utils
 
 
@@ -10,13 +10,16 @@ class Searcher:
     # parameter allows you to pass in a precomputed model that is already in 
     # memory for the searcher to use such as LSI, LDA, Word2vec models. 
     # MAKE SURE YOU DON'T LOAD A MODEL INTO MEMORY HERE AS THIS IS RUN AT QUERY TIME.
-    def __init__(self, parser, indexer, model=None):
+    def __init__(self, parser, indexer, model=None, method=None):
         self._parser = parser
         self._indexer = indexer
         self._ranker = Ranker()
         self._model = model
+        self.method = method
+        self.our_data = utils.load_obj("idx_spellcheck")# tuple (inverted_idx,posting_dict,num_of_documents)
 
-    # DO NOT MODIFY THIS SIGNATURE
+        # DO NOT MODIFY THIS SIGNATURE
+
     # You can change the internal implementation as you see fit.
     def search(self, query, k=None):
         """ 
@@ -31,9 +34,12 @@ class Searcher:
             and the last is the least relevant result.
         """
         query_as_list = self._parser.parse_sentence(query)
+        if self.method is not None:
+            query_as_list = self.method.update(query_as_list)
+
         relevant_docs = self.relevant_docs_from_posting(query_as_list)
 
-        ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, k)
+        ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, self.our_data, k)
 
         n_relevant = len(relevant_docs)
         return n_relevant, ranked_doc_ids
@@ -50,7 +56,7 @@ class Searcher:
         relevant_docs = {}
         for term in query_as_list:
             posting_list = self._indexer.get_term_posting_list(term)
-            for doc_id, tf in posting_list:
+            for doc_id, tf in posting_list[:-1]:
                 df = relevant_docs.get(doc_id, 0)
                 relevant_docs[doc_id] = df + 1
         return relevant_docs

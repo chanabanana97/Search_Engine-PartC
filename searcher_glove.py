@@ -1,4 +1,4 @@
-from ranker import RankerGlove
+from ranker_glove import RankerGlove
 import utils
 
 

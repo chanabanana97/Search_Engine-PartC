@@ -1,11 +1,8 @@
 import string
 from nltk.tokenize import word_tokenize
 import re
-
-import utils
 from document import Document
-from stemmer import Stemmer
-from spell_checker import spell_checker
+# from spell_checker import SpellChecker
 
 
 class Parse:
@@ -22,8 +19,8 @@ class Parse:
 
         self.entities_dict = {k: [] for k in string.ascii_uppercase}
         self.to_correct_spelling = to_correct_spelling
-        if to_correct_spelling:  # spell checker
-            self.spell = spell_checker()
+        # if to_correct_spelling:  # spell checker
+        #     self.spell = SpellChecker()
 
     def handle_hashtag(self, hashtag_str: str):
         glue = ' '
@@ -204,8 +201,8 @@ class Parse:
         new_tokenized_text = tokenized_text + tokenized_url + tokenized_quote
 
         # spell checker
-        if self.to_correct_spelling:
-            new_tokenized_text = self.spell.correct_spelling(new_tokenized_text)
+        # if self.to_correct_spelling:
+        #     new_tokenized_text = self.spell.correct_spelling(new_tokenized_text)
 
         # if self.stemming is True:
         #     s = Stemmer()

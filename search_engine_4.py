@@ -1,11 +1,10 @@
-# spell checker
+# thesaurus
 
 import pandas as pd
 from parser_module import Parse
 from indexer import Indexer
 from searcher import Searcher
-from spell_checker import Spell_Checker
-import utils
+
 
 # DO NOT CHANGE THE CLASS NAME
 class SearchEngine:
@@ -17,8 +16,6 @@ class SearchEngine:
         self._parser = Parse()
         self._indexer = Indexer(config)
         self._model = None
-
-        self.our_data = ()
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -42,10 +39,6 @@ class SearchEngine:
             # index the document data
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
-
-        self._indexer.add_term_freq()
-        self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
-        utils.save_obj(self.our_data, 'idx_spellcheck')
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -80,7 +73,6 @@ class SearchEngine:
             a list of tweet_ids where the first element is the most relavant
             and the last is the least relevant result.
         """
-        spellchecker = Spell_Checker()
-        searcher = Searcher(self._parser, self._indexer, model=self._model, method=spellchecker)
+        searcher = Searcher(self._parser, self._indexer, model=self._model)
         return searcher.search(query)
 

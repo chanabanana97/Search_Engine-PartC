@@ -15,6 +15,8 @@ class Indexer:
         if self.is_glove:
             self.docs_as_vectors = {}
             self.glove = Glove()
+        else:
+            self.docs = {}
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -32,9 +34,9 @@ class Indexer:
             try:
                 # Update inverted index and posting
                 if term not in self.inverted_idx:
-                    self.inverted_idx[term] = 1
+                    self.inverted_idx[term] = document_dictionary[term]
                 else:
-                    self.inverted_idx[term] += 1
+                    self.inverted_idx[term] += document_dictionary[term]
 
                 if not self._is_term_exist(term):
                     self.postingDict[term] = []
@@ -48,6 +50,13 @@ class Indexer:
 
         if self.is_glove:
             self.docs_as_vectors[document.tweet_id] = self.glove.doc_to_vec(document_dictionary)
+        else:
+            self.docs[document.tweet_id] = document_dictionary
+            # self.docs[document.tweet_id] = max(document_dictionary.values()) # max tf
+
+    def add_term_freq(self):
+        for key in self.postingDict:
+            self.postingDict[key].append(len(self.postingDict[key]))
 
     def remove_uncommon_words(self):
         """
