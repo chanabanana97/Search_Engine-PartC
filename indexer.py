@@ -45,6 +45,7 @@ class Indexer:
 
             except:
                 print('problem with the following key {}'.format(term[0]))
+
         if self.is_glove:
             self.docs_as_vectors[document.tweet_id] = self.glove.doc_to_vec(document_dictionary)
 

@@ -24,7 +24,8 @@ class RankerGlove:
             if tweet_id in docs_as_vectors:
                 cos_sim = np.dot(docs_as_vectors[tweet_id], query_vector) / (
                             norm(docs_as_vectors[tweet_id]) * norm(query_vector))
-                docs_to_return.append((tweet_id, cos_sim))
+                if cos_sim > 0.98:
+                    docs_to_return.append((tweet_id, cos_sim))
             # else:
             #     docs_to_return.append((tweet_id, 0.9))
 

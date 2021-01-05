@@ -4,7 +4,6 @@ import pandas as pd
 from parser_module import Parse
 from indexer import Indexer
 from searcher import Searcher
-from spell_checker import spell_checker
 
 
 # DO NOT CHANGE THE CLASS NAME

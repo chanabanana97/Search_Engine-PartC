@@ -13,10 +13,7 @@ class Searcher:
     def __init__(self, parser, indexer, model=None):
         self._parser = parser
         self._indexer = indexer
-        if self._indexer.is_glove:
-            self._ranker_glove = RankerGlove()
-        else:
-            self._ranker = Ranker()
+        self._ranker = Ranker()
         self._model = model
 
     # DO NOT MODIFY THIS SIGNATURE
@@ -36,15 +33,10 @@ class Searcher:
         query_as_list = self._parser.parse_sentence(query)
         relevant_docs = self.relevant_docs_from_posting(query_as_list)
 
-        if self._indexer.is_glove:
-            query_as_vec = self._indexer.glove.doc_to_vec(query_as_list)
-            docs_as_vecs = self._indexer.docs_as_vectors
-            ranked_doc_ids = RankerGlove.rank_relevant_docs(relevant_docs, docs_as_vecs, query_as_vec, k)
-        else:
-            ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, k)
+        ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, k)
 
-        # n_relevant = len(relevant_docs)
-        return len(ranked_doc_ids), ranked_doc_ids
+        n_relevant = len(relevant_docs)
+        return n_relevant, ranked_doc_ids
 
     # feel free to change the signature and/or implementation of this function 
     # or drop altogether.

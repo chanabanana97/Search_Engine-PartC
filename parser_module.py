@@ -22,6 +22,8 @@ class Parse:
 
         self.entities_dict = {k: [] for k in string.ascii_uppercase}
         self.to_correct_spelling = to_correct_spelling
+        if to_correct_spelling:  # spell checker
+            self.spell = spell_checker()
 
     def handle_hashtag(self, hashtag_str: str):
         glue = ' '
@@ -52,11 +54,11 @@ class Parse:
         return "@" + tag_string
 
 
-    def upper_or_lower(self, word_to_check):
-        if word_to_check[0].isupper():
-            self.uppercase_dict[word_to_check[0]].add(word_to_check)
-            return str.upper(word_to_check)
-        return word_to_check
+    # def upper_or_lower(self, word_to_check):
+    #     if word_to_check[0].isupper():
+    #         self.uppercase_dict[word_to_check[0]].add(word_to_check)
+    #         return str.upper(word_to_check)
+    #     return word_to_check
 
 
     def handle_url(self, url_token: str):
@@ -81,14 +83,14 @@ class Parse:
         word = re_emoji.sub(r'', txt)
         return word
 
-    def handle_entity(self, txt):
-        entity =""
-        for word in txt:
-            if word[0].isupper():
-                entity += word + " "
-            else:
-                break
-        return entity
+    # def handle_entity(self, txt):
+    #     entity =""
+    #     for word in txt:
+    #         if word[0].isupper():
+    #             entity += word + " "
+    #         else:
+    #             break
+    #     return entity
 
     def parse_sentence(self, text):
         """
@@ -160,11 +162,11 @@ class Parse:
                 if emojis_removed is not "":
                     new_tokenized_text.append(emojis_removed)
             else:
-                new_tokenized_text.append(self.upper_or_lower(term))
-                if next_term is not None and term[0].isupper() and next_term[0].isupper():
-                    entity = term[0] + " " + term[1]
-                    new_tokenized_text.append(entity)  # names & entities
-                    self.entities_dict[term[0]].append(entity)
+                new_tokenized_text.append(term.lower())
+                # if next_term is not None and term[0].isupper() and next_term[0].isupper():
+                #     entity = term[0] + " " + term[1]
+                #     new_tokenized_text.append(entity)  # names & entities
+                #     self.entities_dict[term[0]].append(entity)
 
         return new_tokenized_text
 
@@ -201,9 +203,9 @@ class Parse:
 
         new_tokenized_text = tokenized_text + tokenized_url + tokenized_quote
 
-        if self.to_correct_spelling: # spell checker
-            spell = spell_checker()
-            new_tokenized_text = spell.correct_spelling(new_tokenized_text)
+        # spell checker
+        if self.to_correct_spelling:
+            new_tokenized_text = self.spell.correct_spelling(new_tokenized_text)
 
         # if self.stemming is True:
         #     s = Stemmer()
@@ -220,36 +222,32 @@ class Parse:
 
         document = Document(tweet_id, tweet_date, full_text, url, retweet_text, retweet_url, quote_text,
                             quote_url, term_dict, doc_length)
-
-        # document = Document(tweet_id, tweet_date, full_text, url, quote_text,
-        #                     term_dict, doc_length)
-
         return document
 
 
-    # TODO remove??
-    def remove_uppercase_and_entities(self, indexer):
-        word_in_lower_and_upper = []
-        inverted_idx = indexer.inverted_idx
 
-        # check if word whom found in upper case also found in lower. if yes - remove from posting files (and inverted index)
-        for letter in self.uppercase_dict:
-            upper_to_lower_words = [x.lower() for x in list(self.uppercase_dict[letter])]
-            for word in upper_to_lower_words:
-                if word in inverted_idx:
-                    word_in_lower_and_upper.append(word)
-
-            letter_posting_file = utils.load_obj(indexer.out + letter.lower())
-            for word in word_in_lower_and_upper:
-                if word in letter_posting_file and word.upper() in letter_posting_file:
-                    word_appearance = letter_posting_file[word.upper()]
-                    letter_posting_file[word].extend(word_appearance)
-                    del letter_posting_file[word.upper()]
-                    del inverted_idx[word.upper()]
-
-            # entities - check if they appear at least twice. if not - remove from posting files (and inverted index)
-            for entity in self.entities_dict[letter]:
-                if entity in letter_posting_file and len(letter_posting_file[entity]) < 2:
-                    del letter_posting_file[entity]
-                    del inverted_idx[entity]
-            utils.save_obj(letter_posting_file, indexer.out + letter)
+    # def remove_uppercase_and_entities(self, indexer):
+    #     word_in_lower_and_upper = []
+    #     inverted_idx = indexer.inverted_idx
+    #
+    #     # check if word whom found in upper case also found in lower. if yes - remove from posting files (and inverted index)
+    #     for letter in self.uppercase_dict:
+    #         upper_to_lower_words = [x.lower() for x in list(self.uppercase_dict[letter])]
+    #         for word in upper_to_lower_words:
+    #             if word in inverted_idx:
+    #                 word_in_lower_and_upper.append(word)
+    #
+    #         letter_posting_file = utils.load_obj(indexer.out + letter.lower())
+    #         for word in word_in_lower_and_upper:
+    #             if word in letter_posting_file and word.upper() in letter_posting_file:
+    #                 word_appearance = letter_posting_file[word.upper()]
+    #                 letter_posting_file[word].extend(word_appearance)
+    #                 del letter_posting_file[word.upper()]
+    #                 del inverted_idx[word.upper()]
+    #
+    #         # entities - check if they appear at least twice. if not - remove from posting files (and inverted index)
+    #         for entity in self.entities_dict[letter]:
+    #             if entity in letter_posting_file and len(letter_posting_file[entity]) < 2:
+    #                 del letter_posting_file[entity]
+    #                 del inverted_idx[entity]
+    #         utils.save_obj(letter_posting_file, indexer.out + letter)
