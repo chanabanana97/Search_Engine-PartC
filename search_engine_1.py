@@ -46,7 +46,7 @@ class SearchEngine:
         # print(self.our_data[1])
         print("before")
         print(len(self._indexer.idx_bench))
-        self._indexer.remove_uncommon_words()
+        # self._indexer.remove_uncommon_words()
         print("after")
         print(len(self._indexer.idx_bench))
 

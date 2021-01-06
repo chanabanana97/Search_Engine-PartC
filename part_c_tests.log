@@ -1,5 +1,52 @@
-ERROR 2021-01-06 18:53:50,679: report_part_c.docx does not exist.
-INFO 2021-01-06 18:53:50,708: Successfully loaded benchmark labels data.
-INFO 2021-01-06 18:53:50,712: Successfully loaded queries data.
-INFO 2021-01-06 18:53:52,662: Successfully imported module search_engine_2.
-DEBUG 2021-01-06 18:54:02,495: Building the index in search_engine_2 for benchmark data took 9.8284859 seconds.
+ERROR 2021-01-07 00:10:55,290: report_part_c.docx does not exist.
+INFO 2021-01-07 00:10:55,306: Successfully loaded benchmark labels data.
+INFO 2021-01-07 00:10:55,308: Successfully loaded queries data.
+INFO 2021-01-07 00:10:56,666: Successfully imported module search_engine_1.
+DEBUG 2021-01-07 00:11:01,186: Building the index in search_engine_1 for benchmark data took 4.5157142 seconds.
+ERROR 2021-01-07 00:11:06,053: basic query for the word bioweapon returned no results
+DEBUG 2021-01-07 00:11:16,935: search_engine_1 successfully returned 500 results for query number 1.
+ERROR 2021-01-07 00:11:16,936: Query 1 with keywords 'fauci paper hydroxychloroquine sars' took more than 10 seconds.
+DEBUG 2021-01-07 00:11:24,778: search_engine_1 successfully returned 500 results for query number 2.
+DEBUG 2021-01-07 00:11:31,730: search_engine_1 successfully returned 500 results for query number 3.
+DEBUG 2021-01-07 00:11:40,206: search_engine_1 successfully returned 355 results for query number 4.
+DEBUG 2021-01-07 00:11:47,762: search_engine_1 successfully returned 375 results for query number 5.
+DEBUG 2021-01-07 00:11:55,431: search_engine_1 successfully returned 500 results for query number 6.
+DEBUG 2021-01-07 00:12:00,777: search_engine_1 successfully returned 299 results for query number 7.
+DEBUG 2021-01-07 00:12:08,142: search_engine_1 successfully returned 500 results for query number 8.
+DEBUG 2021-01-07 00:12:15,254: search_engine_1 successfully returned 500 results for query number 9.
+DEBUG 2021-01-07 00:12:24,380: search_engine_1 successfully returned 500 results for query number 10.
+DEBUG 2021-01-07 00:12:34,039: search_engine_1 successfully returned 500 results for query number 11.
+DEBUG 2021-01-07 00:12:41,736: search_engine_1 successfully returned 500 results for query number 12.
+DEBUG 2021-01-07 00:12:49,704: search_engine_1 successfully returned 500 results for query number 13.
+DEBUG 2021-01-07 00:12:57,356: search_engine_1 successfully returned 500 results for query number 14.
+ERROR 2021-01-07 00:13:02,326: Query 15 with keywords 'operation lockstep rockefeller' returned no results.
+DEBUG 2021-01-07 00:13:10,410: search_engine_1 successfully returned 500 results for query number 16.
+DEBUG 2021-01-07 00:13:17,013: search_engine_1 successfully returned 500 results for query number 17.
+DEBUG 2021-01-07 00:13:22,985: search_engine_1 successfully returned 337 results for query number 18.
+DEBUG 2021-01-07 00:13:30,514: search_engine_1 successfully returned 500 results for query number 19.
+DEBUG 2021-01-07 00:13:43,068: search_engine_1 successfully returned 500 results for query number 20.
+ERROR 2021-01-07 00:13:43,069: Query 20 with keywords 'Outbreak people ate bat' took more than 10 seconds.
+DEBUG 2021-01-07 00:13:51,822: search_engine_1 successfully returned 500 results for query number 21.
+DEBUG 2021-01-07 00:14:01,060: search_engine_1 successfully returned 500 results for query number 22.
+DEBUG 2021-01-07 00:14:12,013: search_engine_1 successfully returned 500 results for query number 23.
+ERROR 2021-01-07 00:14:12,014: Query 23 with keywords 'flu deadlier than covid-19' took more than 10 seconds.
+DEBUG 2021-01-07 00:14:21,297: search_engine_1 successfully returned 500 results for query number 24.
+DEBUG 2021-01-07 00:14:28,742: search_engine_1 successfully returned 500 results for query number 25.
+DEBUG 2021-01-07 00:14:35,854: search_engine_1 successfully returned 500 results for query number 26.
+DEBUG 2021-01-07 00:14:45,163: search_engine_1 successfully returned 500 results for query number 27.
+DEBUG 2021-01-07 00:14:52,602: search_engine_1 successfully returned 500 results for query number 28.
+DEBUG 2021-01-07 00:15:00,332: search_engine_1 successfully returned 500 results for query number 29.
+DEBUG 2021-01-07 00:15:07,159: search_engine_1 successfully returned 500 results for query number 30.
+DEBUG 2021-01-07 00:15:13,424: search_engine_1 successfully returned 402 results for query number 31.
+DEBUG 2021-01-07 00:15:21,148: search_engine_1 successfully returned 500 results for query number 32.
+DEBUG 2021-01-07 00:15:29,449: search_engine_1 successfully returned 500 results for query number 33.
+DEBUG 2021-01-07 00:15:37,129: search_engine_1 successfully returned 500 results for query number 34.
+DEBUG 2021-01-07 00:15:45,194: search_engine_1 successfully returned 500 results for query number 35.
+WARNING 2021-01-07 00:15:45,274: search_engine_1's recall for the following queries was zero [15].
+DEBUG 2021-01-07 00:15:51,245: search_engine_1 results have MAP value of 0.715449198358294.
+DEBUG 2021-01-07 00:15:51,305: search_engine_1 results produced average precision of 0.6332768158960362.
+DEBUG 2021-01-07 00:15:51,305: search_engine_1 results produced average precision@5 of 0.7019607843137255.
+DEBUG 2021-01-07 00:15:51,305: search_engine_1 results produced average precision@10 of 0.6750700280112045.
+DEBUG 2021-01-07 00:15:51,305: search_engine_1 results produced average precision@50 of 0.6370812572360559.
+DEBUG 2021-01-07 00:15:51,305: search_engine_1 results produced average recall of 0.48144217843120796.
+DEBUG 2021-01-07 00:15:51,305: Total runtime was: 0:04:56.015840

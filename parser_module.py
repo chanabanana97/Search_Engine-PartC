@@ -29,7 +29,7 @@ class Parse:
         else:  # separate by uppercase letters
             result = ''.join(glue + x.lower() if x.isupper() else x for x in hashtag_str).strip(glue).split(glue)
         result.append("#" + hashtag_str.lower().replace("_", ""))
-
+        result = [i for i in result if len(i) > 1] # remove single letters
         return result
 
     def handle_numbers(self, num_as_str):
@@ -110,11 +110,11 @@ class Parse:
 
         # parsing
         doc_length = len(text_tokens_without_stopwords)
-        num_dict = {"thousand": "K", "million": "M", "billion": "B", "dollar": "$", "dollars": "$", "percent": "%",
+        num_dict = {"thousand": "K", "million": "M", "billion": "B", "dollar": "$", "dollars": "$", "bucks":"$", "percent": "%",
                     "$": "$", "%": "%",
                     "percentage": "%"}
 
-        similar_words_dict = {}
+        similar_words_dict = {"corona":"covid", "covid19":"covid", "coronavirus":"covid", "covid-19":"covid", "covid": "covid"}
 
         new_tokenized_text = []
         i = -1
@@ -127,7 +127,9 @@ class Parse:
             term = text_tokens_without_stopwords[i]
 
             term = term.encode("ascii", "ignore").decode()  # remove ascii
-            # term = re.sub(r'[^\x00-\x7f]', r'', term)
+            if term.lower() in similar_words_dict:
+                new_tokenized_text.append(similar_words_dict[term.lower()])
+                continue
             next_term = None
             if term.startswith("//t") or (term.isalpha() and len(term) == 1): # remove short urls and terms that are single letters
                 continue
@@ -135,9 +137,9 @@ class Parse:
                 new_tokenized_text.extend(term.split("-"))
             if i + 1 < doc_length:
                 next_term = text_tokens_without_stopwords[i + 1]
-            # if term is "@" and next_term is not None:
-            #     new_tokenized_text.append(self.handle_tags(next_term))
-            #     i += 1
+            if term is "@" and next_term is not None:
+                i += 2 # removing @ and name
+                continue
             if term is "#" and next_term is not None:
                 new_tokenized_text.extend(self.handle_hashtag(next_term))
                 i += 1
@@ -163,11 +165,12 @@ class Parse:
                     new_tokenized_text.append(emojis_removed)
             else:
                 new_tokenized_text.append(term.lower())
-                # if next_term is not None and term[0].isupper() and next_term[0].isupper():
-                #     entity = term[0] + " " + term[1]
-                #     new_tokenized_text.append(entity)  # names & entities
-                #     self.entities_dict[term[0]].append(entity)
 
+        # best_tokenized_text = []
+        # for w in new_tokenized_text:
+        #     if w.lower() not in self.stop_words_dict:
+        #         best_tokenized_text.append(w)
+        # return best_tokenized_text
         return new_tokenized_text
 
     def parse_doc(self, doc_as_list):

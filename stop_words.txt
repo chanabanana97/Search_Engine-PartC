@@ -102,7 +102,6 @@ any
 both
 each
 few
-more
 most
 other
 some
@@ -131,6 +130,9 @@ www
 http
 https
 's
+'re
+wh
+n't
 :
 ,
 '

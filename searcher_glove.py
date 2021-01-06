@@ -38,9 +38,8 @@ class SearcherGlove:
         # relevant_docs_to_send = sorted(relevant_docs.items(), key=lambda x: x[1], reverse=True)
         # relevant_docs_dict = dict(relevant_docs_to_send[:length])
         relevant_docs_to_send = list(relevant_docs)
-        length = min(len(relevant_docs_to_send), self.SIZE)
 
-        ranked_doc_ids = self._ranker_glove.rank_relevant_docs(relevant_docs_to_send[:length], self.our_data, query_as_list, k)
+        ranked_doc_ids = self._ranker_glove.rank_relevant_docs(relevant_docs_to_send[:self.SIZE], self.our_data, query_as_list, k)
 
         # n_relevant = len(relevant_docs)
         return len(ranked_doc_ids), ranked_doc_ids

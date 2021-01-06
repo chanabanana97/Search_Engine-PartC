@@ -17,7 +17,7 @@ class SearchEngine:
         self._parser = Parse()
         self._indexer = Indexer(config)
         self._model = None
-
+        self.spellchecker = Spell_Checker()
         self.our_data = ()
 
     # DO NOT MODIFY THIS SIGNATURE
@@ -44,6 +44,7 @@ class SearchEngine:
         print('Finished parsing and indexing.')
 
         # self._indexer.add_term_freq()
+        # self._indexer.remove_uncommon_words()
         self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
         utils.save_obj(self.our_data, 'idx')
 
@@ -80,7 +81,6 @@ class SearchEngine:
             a list of tweet_ids where the first element is the most relavant
             and the last is the least relevant result.
         """
-        spellchecker = Spell_Checker()
-        searcher = Searcher(self._parser, self._indexer, model=self._model, method=spellchecker)
+        searcher = Searcher(self._parser, self._indexer, model=self._model, method=self.spellchecker)
         return searcher.search(query)
 

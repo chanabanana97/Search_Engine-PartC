@@ -40,7 +40,7 @@ class Searcher:
 
         relevant_docs = self.relevant_docs_from_posting(query_as_list)
 
-        ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, self.our_data, k)
+        ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, self.our_data, query_as_list, k)
 
         return len(ranked_doc_ids), ranked_doc_ids
 

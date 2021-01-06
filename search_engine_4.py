@@ -4,6 +4,8 @@ import pandas as pd
 from parser_module import Parse
 from indexer import Indexer
 from searcher import Searcher
+from thesaurus import Thesaurus
+import utils
 
 
 # DO NOT CHANGE THE CLASS NAME
@@ -16,6 +18,8 @@ class SearchEngine:
         self._parser = Parse()
         self._indexer = Indexer(config)
         self._model = None
+        self.our_data = ()
+        self.thesaurus = Thesaurus()
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -39,6 +43,13 @@ class SearchEngine:
             # index the document data
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
+
+        # self._indexer.remove_uncommon_words()
+        self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
+        utils.save_obj(self.our_data, 'idx')
+
+        print(len(self._indexer.inverted_idx.items()))
+        print(sorted(self._indexer.inverted_idx.items(), key=lambda element: element[1], reverse=True))
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -73,6 +84,7 @@ class SearchEngine:
             a list of tweet_ids where the first element is the most relavant
             and the last is the least relevant result.
         """
-        searcher = Searcher(self._parser, self._indexer, model=self._model)
+
+        searcher = Searcher(self._parser, self._indexer, model=self._model, method=self.thesaurus)
         return searcher.search(query)
 
