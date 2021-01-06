@@ -7,7 +7,7 @@ from document import Document
 
 class Parse:
 
-    def __init__(self, to_correct_spelling=False):
+    def __init__(self):
         # self.stop_words = stopwords.words('english')
         # self.stemming = stem
         with open('stop_words.txt', 'r') as f:
@@ -18,7 +18,7 @@ class Parse:
             self.uppercase_dict[key] = set()
 
         self.entities_dict = {k: [] for k in string.ascii_uppercase}
-        self.to_correct_spelling = to_correct_spelling
+        # self.to_correct_spelling = to_correct_spelling
         # if to_correct_spelling:  # spell checker
         #     self.spell = SpellChecker()
 
@@ -47,8 +47,8 @@ class Parse:
             return str(int(num / b)) + "B"
 
 
-    def handle_tags(self, tag_string):
-        return "@" + tag_string
+    # def handle_tags(self, tag_string):
+    #     return "@" + tag_string
 
 
     # def upper_or_lower(self, word_to_check):
@@ -58,17 +58,17 @@ class Parse:
     #     return word_to_check
 
 
-    def handle_url(self, url_token: str):
-        if url_token is None or url_token.startswith("//t"):
-            return []
-        url_arr_to_return = []
-        url_token = url_token[8:]
-        url_arr = re.split('=|/|:|#|%|&', url_token)
-        for tok in url_arr[1:]:
-            if tok.__contains__('-'):
-                url_arr_to_return.extend(tok.split('-'))
-        url_arr_to_return.append(url_arr[0])
-        return url_arr_to_return
+    # def handle_url(self, url_token: str):
+    #     if url_token is None or url_token.startswith("//t"):
+    #         return []
+    #     url_arr_to_return = []
+    #     url_token = url_token[8:]
+    #     url_arr = re.split('=|/|:|#|%|&', url_token)
+    #     for tok in url_arr[1:]:
+    #         if tok.__contains__('-'):
+    #             url_arr_to_return.extend(tok.split('-'))
+    #     url_arr_to_return.append(url_arr[0])
+    #     return url_arr_to_return
 
     # our rule 1: remove emojis from tweets
     def remove_emojis(self, txt):
@@ -88,6 +88,7 @@ class Parse:
     #         else:
     #             break
     #     return entity
+
 
     def parse_sentence(self, text):
         """
@@ -113,6 +114,8 @@ class Parse:
                     "$": "$", "%": "%",
                     "percentage": "%"}
 
+        similar_words_dict = {}
+
         new_tokenized_text = []
         i = -1
         # for i in range(doc_length):
@@ -132,10 +135,10 @@ class Parse:
                 new_tokenized_text.extend(term.split("-"))
             if i + 1 < doc_length:
                 next_term = text_tokens_without_stopwords[i + 1]
-            if term is "@" and next_term is not None:
-                new_tokenized_text.append(self.handle_tags(next_term))
-                i += 1
-            elif term is "#" and next_term is not None:
+            # if term is "@" and next_term is not None:
+            #     new_tokenized_text.append(self.handle_tags(next_term))
+            #     i += 1
+            if term is "#" and next_term is not None:
                 new_tokenized_text.extend(self.handle_hashtag(next_term))
                 i += 1
             elif term is "$" and next_term is not None and str.isdigit(
@@ -193,12 +196,12 @@ class Parse:
 
         tokenized_text = self.parse_sentence(full_text)
         tokenized_quote = self.parse_sentence(quote_text)
-        tokenized_url = self.handle_url(url)
+        # tokenized_url = self.handle_url(url)
 
 
         doc_length = len(tokenized_text)  # after text operations - length of full_text
 
-        new_tokenized_text = tokenized_text + tokenized_url + tokenized_quote
+        new_tokenized_text = tokenized_text + tokenized_quote
 
         # spell checker
         # if self.to_correct_spelling:

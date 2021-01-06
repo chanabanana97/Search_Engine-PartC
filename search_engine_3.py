@@ -1,6 +1,8 @@
 # word net
 
 import pandas as pd
+
+import utils
 from parser_module import Parse
 from indexer import Indexer
 from searcher import Searcher
@@ -17,6 +19,7 @@ class SearchEngine:
         self._parser = Parse()
         self._indexer = Indexer(config)
         self._model = None
+        self.our_data = ()
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -40,6 +43,9 @@ class SearchEngine:
             # index the document data
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
+
+        self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
+        utils.save_obj(self.our_data, 'idx')
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

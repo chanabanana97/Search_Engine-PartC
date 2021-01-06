@@ -5,18 +5,18 @@ from glove import Glove
 class Indexer:
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
-    def __init__(self, config, is_glove=False):
+    def __init__(self, config):
         self.inverted_idx = {}
         self.postingDict = {}
         self.idx_bench = {}
         self.config = config
-        self.is_glove = is_glove
-        # for glove
-        if self.is_glove:
-            self.docs_as_vectors = {}
-            self.glove = Glove()
-        else:
-            self.docs = {}
+        # self.is_glove = is_glove
+        # # for glove
+        # if self.is_glove:
+        #     self.docs_as_vectors = {}
+        #     self.glove = Glove()
+        # else:
+        self.docs = {}
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -34,29 +34,30 @@ class Indexer:
             try:
                 # Update inverted index and posting
                 if term not in self.inverted_idx:
-                    self.inverted_idx[term] = document_dictionary[term]
+                    self.inverted_idx[term] = 1
                 else:
-                    self.inverted_idx[term] += document_dictionary[term]
+                    self.inverted_idx[term] += 1
 
                 if not self._is_term_exist(term):
-                    self.postingDict[term] = []
+                    self.postingDict[term] = {}
 
-                self.postingDict[term].append((document.tweet_id, document_dictionary[term]))
+                self.postingDict[term][document.tweet_id] = document_dictionary[term]
 
                 self.idx_bench[term] = (self.inverted_idx[term], self.postingDict[term])
 
             except:
                 print('problem with the following key {}'.format(term[0]))
+        #
+        # if self.is_glove:
+        #     self.docs_as_vectors[document.tweet_id] = self.glove.doc_to_vec(document_dictionary)
+        # else:
 
-        if self.is_glove:
-            self.docs_as_vectors[document.tweet_id] = self.glove.doc_to_vec(document_dictionary)
-        else:
-            self.docs[document.tweet_id] = document_dictionary
-            # self.docs[document.tweet_id] = max(document_dictionary.values()) # max tf
+        self.docs[document.tweet_id] = document_dictionary
+        # self.docs[document.tweet_id] = max(document_dictionary.values()) # max tf
 
-    def add_term_freq(self):
-        for key in self.postingDict:
-            self.postingDict[key].append(len(self.postingDict[key]))
+    # def add_term_freq(self):
+    #     for key in self.postingDict:
+    #         self.postingDict[key].append(len(self.postingDict[key]))
 
     def remove_uncommon_words(self):
         """
@@ -103,5 +104,5 @@ class Indexer:
         """
         Return the posting list from the index for a term.
         """
-        return self.postingDict[term] if self._is_term_exist(term) else []
+        return list(self.postingDict[term]) if self._is_term_exist(term) else []
         # return self.idx_bench[term][1] if self._is_term_exist(term) else []

@@ -130,6 +130,7 @@ rt
 www
 http
 https
+'s
 :
 ,
 '

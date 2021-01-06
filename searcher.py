@@ -1,5 +1,6 @@
 from ranker import Ranker
 from spell_checker import Spell_Checker
+from word_net import WordNet
 import utils
 
 
@@ -16,10 +17,10 @@ class Searcher:
         self._ranker = Ranker()
         self._model = model
         self.method = method
-        self.our_data = utils.load_obj("idx_spellcheck")# tuple (inverted_idx,posting_dict,num_of_documents)
+        self.our_data = utils.load_obj("idx")# tuple (index_bench, docs ,num_of_documents)
 
-        # DO NOT MODIFY THIS SIGNATURE
 
+    # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
     def search(self, query, k=None):
         """ 
@@ -41,8 +42,7 @@ class Searcher:
 
         ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, self.our_data, k)
 
-        n_relevant = len(relevant_docs)
-        return n_relevant, ranked_doc_ids
+        return len(ranked_doc_ids), ranked_doc_ids
 
     # feel free to change the signature and/or implementation of this function 
     # or drop altogether.
@@ -56,7 +56,7 @@ class Searcher:
         relevant_docs = {}
         for term in query_as_list:
             posting_list = self._indexer.get_term_posting_list(term)
-            for doc_id, tf in posting_list[:-1]:
+            for doc_id in posting_list:
                 df = relevant_docs.get(doc_id, 0)
                 relevant_docs[doc_id] = df + 1
         return relevant_docs

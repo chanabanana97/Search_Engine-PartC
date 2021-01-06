@@ -1,5 +1,7 @@
 # GLOVE
 import pandas as pd
+
+import utils
 from parser_module import Parse
 from indexer import Indexer
 from searcher_glove import SearcherGlove
@@ -13,7 +15,7 @@ class SearchEngine:
     def __init__(self, config=None):
         self._config = config
         self._parser = Parse()
-        self._indexer = Indexer(config, is_glove=True)
+        self._indexer = Indexer(config)
         self._model = None
 
         self.our_data = ()
@@ -48,7 +50,8 @@ class SearchEngine:
         print("after")
         print(len(self._indexer.idx_bench))
 
-        self.our_data = (self._indexer.idx_bench, self._indexer.docs_as_vectors)  # save?
+        self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
+        utils.save_obj(self.our_data, 'idx')
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

@@ -15,8 +15,11 @@ import time
 # print(ranked_docs_id)
 
 
-query_bad_spelling = ["covid19", "corona", "covid", "tiday", "trump", "coronavirus", "covid-19"]
-print(query_bad_spelling)
-our_spell_checker = Spell_Checker()
-returned = our_spell_checker.update(query_bad_spelling)
-print(returned)
+# query_bad_spelling = ["covid19", "corona", "covid", "tiday", "trump", "coronavirus", "covid-19"]
+# print(query_bad_spelling)
+# our_spell_checker = Spell_Checker()
+# returned = our_spell_checker.update(query_bad_spelling)
+# print(returned)
+
+test = [1,2,3,4,5,6,7,8,9]
+print(test[:5])
