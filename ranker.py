@@ -47,7 +47,7 @@ class Ranker:
                 if math.sqrt(mechane_cos_sim * query_len) == 0:
                     continue
                 cos_sim = tf_idf / math.sqrt(mechane_cos_sim * query_len)
-                if cos_sim > 0.043:
+                if cos_sim > 0.04:
                     most_relevant_docs[tweet_id] = cos_sim
                 # most_relevant_docs[tweet_id] = tf_idf
             except KeyError:

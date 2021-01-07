@@ -1,13 +1,14 @@
-# GLOVE
-import pandas as pd
+# word2vec
 
-import utils
+import pandas as pd
 from parser_module import Parse
 from indexer import Indexer
-from searcher_glove import SearcherGlove
-
+from searcher import Searcher
+import utils
+from word2vec import Word2Vec
 
 # DO NOT CHANGE THE CLASS NAME
+
 class SearchEngine:
 
     # DO NOT MODIFY THIS SIGNATURE
@@ -17,8 +18,9 @@ class SearchEngine:
         self._parser = Parse()
         self._indexer = Indexer(config)
         self._model = None
-
         self.our_data = ()
+        self.word2vec = Word2Vec()
+
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
     def build_index_from_parquet(self, fn):
@@ -42,15 +44,12 @@ class SearchEngine:
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
 
-        # print(self.our_data[1])
-        print("before")
-        print(len(self._indexer.idx_bench))
         # self._indexer.remove_uncommon_words()
-        print("after")
-        print(len(self._indexer.idx_bench))
-
         self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
-        utils.save_obj(self.our_data, 'idx')
+        utils.save_obj(self.our_data, 'idx_bench')
+
+        # print(len(self._indexer.inverted_idx.items()))
+        # print(sorted(self._indexer.inverted_idx.items(), key=lambda element: element[1], reverse=True))
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -60,7 +59,7 @@ class SearchEngine:
         Input:
             fn - file name of pickled index.
         """
-        self._indexer.load_index(fn)
+        self._indexer.load_index(fn.replace(".pkl", ""))
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -86,6 +85,5 @@ class SearchEngine:
             and the last is the least relevant result.
         """
 
-        searcher = SearcherGlove(self._parser, self._indexer, model=self._model)
+        searcher = Searcher(self._parser, self._indexer, model=self._model, method=self.word2vec)
         return searcher.search(query)
-

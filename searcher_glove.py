@@ -14,8 +14,8 @@ class SearcherGlove:
         self._indexer = indexer
         self._ranker_glove = RankerGlove()
         self._model = model
-        self.our_data = utils.load_obj("idx")# tuple (index_bench, docs ,num_of_documents)
-        self.SIZE = 1000
+        self.our_data = utils.load_obj("idx_bench")# tuple (index_bench, docs ,num_of_documents)
+        self.SIZE = 500
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

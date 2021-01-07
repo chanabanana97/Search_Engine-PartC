@@ -2,26 +2,20 @@ import string
 from nltk.tokenize import word_tokenize
 import re
 from document import Document
-# from spell_checker import SpellChecker
+from spell_checker import Spell_Checker
 from stemmer import Stemmer
 
 
 class Parse:
 
     def __init__(self):
-        # self.stop_words = stopwords.words('english')
         # self.stemming = stem
         with open('stop_words.txt', 'r') as f:
             self.our_stop_words = f.read().splitlines()
         self.stop_words_dict = {key: None for key in self.our_stop_words}
-        self.uppercase_dict = dict.fromkeys(string.ascii_uppercase)
-        for key in self.uppercase_dict:
-            self.uppercase_dict[key] = set()
-
-        self.entities_dict = {k: [] for k in string.ascii_uppercase}
         # self.to_correct_spelling = to_correct_spelling
         # if to_correct_spelling:  # spell checker
-        #     self.spell = SpellChecker()
+        # self.spell = Spell_Checker()
 
     def handle_hashtag(self, hashtag_str: str):
         glue = ' '
@@ -208,9 +202,7 @@ class Parse:
         new_tokenized_text = tokenized_text + tokenized_quote
 
         # spell checker
-        # if self.to_correct_spelling:
-        #     new_tokenized_text = self.spell.correct_spelling(new_tokenized_text)
-
+        # new_tokenized_text = self.spell.update(new_tokenized_text)
 
         # s = Stemmer()
         # for token in new_tokenized_text:

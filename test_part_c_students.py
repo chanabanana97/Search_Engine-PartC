@@ -84,8 +84,8 @@ if __name__ == '__main__':
 
         # test for each search engine module
         # engine_modules = ['search_engine_' + name for name in ['1', '2', 'best']]
-        # engine_modules = ['search_engine_' + name for name in ['2', '3', '4','best']]
-        engine_modules = ['search_engine_best']
+        # engine_modules = ['search_engine_' + name for name in ['1', '2', '3', '4', 'best']]
+        engine_modules = ['search_engine_1']
         for engine_module in engine_modules:
             try:
                 # does the module file exist?

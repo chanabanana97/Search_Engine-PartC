@@ -4,13 +4,10 @@ from glove import Glove
 
 
 class RankerGlove:
-    def __init__(self,glove):
-        self.glove = glove
+    def __init__(self):
+        self.glove = Glove()
 
-    # def get_vectors(self, query):
-    #     query_vector = self.glove.doc_to_vec(query)
-    #     return query_vector
-    #
+
     # @staticmethod
     def rank_relevant_docs(self, relevant_docs, data, query, k=None):
         """

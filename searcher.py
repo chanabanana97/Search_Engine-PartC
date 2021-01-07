@@ -1,7 +1,5 @@
 from ranker import Ranker
 from spell_checker import Spell_Checker
-from word_net import WordNet
-from word2vec import Word2Vec
 import utils
 
 
@@ -18,8 +16,7 @@ class Searcher:
         self._ranker = Ranker()
         self._model = model
         self.method = method
-        self.w2v = Word2Vec()
-        self.our_data = utils.load_obj("idx")# tuple (index_bench, docs ,num_of_documents)
+        self.our_data = utils.load_obj("idx_bench")# tuple (index_bench, docs ,num_of_documents)
 
 
     # DO NOT MODIFY THIS SIGNATURE
@@ -39,7 +36,6 @@ class Searcher:
         query_as_list = self._parser.parse_sentence(query)
         if self.method is not None:
             query_as_list = self.method.update(query_as_list)
-
 
         relevant_docs = self.relevant_docs_from_posting(query_as_list)
 

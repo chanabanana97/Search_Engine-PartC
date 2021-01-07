@@ -48,7 +48,7 @@ class SearchEngine:
 
         # self._indexer.remove_uncommon_words()
         self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
-        utils.save_obj(self.our_data, 'idx')
+        utils.save_obj(self.our_data, 'idx_bench')
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -58,7 +58,7 @@ class SearchEngine:
         Input:
             fn - file name of pickled index.
         """
-        self._indexer.load_index(fn)
+        self._indexer.load_index(fn.replace(".pkl",""))
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

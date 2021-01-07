@@ -1,11 +1,10 @@
-# thesaurus
-
+# GLOVE
 import pandas as pd
+
+import utils
 from parser_module import Parse
 from indexer import Indexer
-from searcher import Searcher
-from thesaurus import Thesaurus
-import utils
+from searcher_glove import SearcherGlove
 
 
 # DO NOT CHANGE THE CLASS NAME
@@ -18,9 +17,8 @@ class SearchEngine:
         self._parser = Parse()
         self._indexer = Indexer(config)
         self._model = None
-        self.our_data = ()
-        self.thesaurus = Thesaurus()
 
+        self.our_data = ()
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
     def build_index_from_parquet(self, fn):
@@ -44,12 +42,11 @@ class SearchEngine:
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
 
-        # self._indexer.remove_uncommon_words()
+
+        print(len(self._indexer.idx_bench))
+
         self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
         utils.save_obj(self.our_data, 'idx_bench')
-
-        # print(len(self._indexer.inverted_idx.items()))
-        # print(sorted(self._indexer.inverted_idx.items(), key=lambda element: element[1], reverse=True))
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -85,6 +82,6 @@ class SearchEngine:
             and the last is the least relevant result.
         """
 
-        searcher = Searcher(self._parser, self._indexer, model=self._model, method=self.thesaurus)
+        searcher = SearcherGlove(self._parser, self._indexer, model=self._model)
         return searcher.search(query)
 

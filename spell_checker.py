@@ -6,6 +6,7 @@ class Spell_Checker:
         self.spell = SpellChecker(language='en')
         self.spell.word_frequency.add('covid')
         self.spell.word_frequency.add('covid19')
+        self.spell.distance = 1
 
     def update(self, list_to_correct:list):
         corrected_list = []
