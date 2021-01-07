@@ -4,8 +4,8 @@ from glove import Glove
 
 
 class RankerGlove:
-    def __init__(self):
-        self.glove = Glove()
+    def __init__(self,glove):
+        self.glove = glove
 
     # def get_vectors(self, query):
     #     query_vector = self.glove.doc_to_vec(query)
@@ -33,8 +33,8 @@ class RankerGlove:
             if query_vector is not np.nan and docs_as_vectors[tweet_id] is not np.nan:
                 cos_sim = np.dot(docs_as_vectors[tweet_id], query_vector) / (
                         norm(docs_as_vectors[tweet_id]) * norm(query_vector))
-                if cos_sim > 0.5:
-                    docs_to_return.append((tweet_id, cos_sim))
+                # if cos_sim > 0.5:
+                docs_to_return.append((tweet_id, cos_sim))
 
         ranked_results = sorted(docs_to_return, key=lambda element: element[1], reverse=True)
 

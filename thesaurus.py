@@ -9,6 +9,6 @@ class Thesaurus:
         synonyms = set(array_of_words)
         for word in array_of_words:
             syn_list = list(thes.synonyms(word, fileid="simN.lsp"))
-            for syn in syn_list[:2]:
+            for syn in syn_list[:3]:
                 synonyms.add(syn)
         return list(synonyms)

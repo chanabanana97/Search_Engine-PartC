@@ -19,7 +19,6 @@ class SearchEngine:
         self._model = None
 
         self.our_data = ()
-
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
     def build_index_from_parquet(self, fn):
@@ -86,6 +85,7 @@ class SearchEngine:
             a list of tweet_ids where the first element is the most relavant
             and the last is the least relevant result.
         """
+
         searcher = SearcherGlove(self._parser, self._indexer, model=self._model)
         return searcher.search(query)
 

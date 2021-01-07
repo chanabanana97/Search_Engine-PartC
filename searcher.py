@@ -1,6 +1,7 @@
 from ranker import Ranker
 from spell_checker import Spell_Checker
 from word_net import WordNet
+from word2vec import Word2Vec
 import utils
 
 
@@ -17,6 +18,7 @@ class Searcher:
         self._ranker = Ranker()
         self._model = model
         self.method = method
+        self.w2v = Word2Vec()
         self.our_data = utils.load_obj("idx")# tuple (index_bench, docs ,num_of_documents)
 
 
@@ -38,6 +40,7 @@ class Searcher:
         if self.method is not None:
             query_as_list = self.method.update(query_as_list)
 
+
         relevant_docs = self.relevant_docs_from_posting(query_as_list)
 
         ranked_doc_ids = Ranker.rank_relevant_docs(relevant_docs, self.our_data, query_as_list, k)
@@ -55,8 +58,9 @@ class Searcher:
 
         relevant_docs = {}
         for term in query_as_list:
-            posting_list = self._indexer.get_term_posting_list(term)
-            for doc_id in posting_list:
-                df = relevant_docs.get(doc_id, 0)
-                relevant_docs[doc_id] = df + 1
+            if term in self.our_data[0]:
+                posting_list = self.our_data[0][term][1]
+                for doc_id in posting_list:
+                    df = relevant_docs.get(doc_id, 0)
+                    relevant_docs[doc_id] = df + 1
         return relevant_docs

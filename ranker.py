@@ -47,17 +47,14 @@ class Ranker:
                 if math.sqrt(mechane_cos_sim * query_len) == 0:
                     continue
                 cos_sim = tf_idf / math.sqrt(mechane_cos_sim * query_len)
-                if cos_sim > 0.1:
+                if cos_sim > 0.043:
                     most_relevant_docs[tweet_id] = cos_sim
                 # most_relevant_docs[tweet_id] = tf_idf
             except KeyError:
-                print("k")
                 pass
 
 
         ranked_results = sorted(most_relevant_docs.items(), key=lambda element: element[1], reverse=True)
-        # if k is None:
-        #     k = 1000
         ranked_results = ranked_results[:k]
         return [d[0] for d in ranked_results]
 

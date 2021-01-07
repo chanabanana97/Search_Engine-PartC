@@ -84,8 +84,8 @@ if __name__ == '__main__':
 
         # test for each search engine module
         # engine_modules = ['search_engine_' + name for name in ['1', '2', 'best']]
-        # engine_modules = ['search_engine_' + name for name in ['2', '3', '4']]
-        engine_modules = ['search_engine_1']
+        # engine_modules = ['search_engine_' + name for name in ['2', '3', '4','best']]
+        engine_modules = ['search_engine_best']
         for engine_module in engine_modules:
             try:
                 # does the module file exist?
@@ -187,7 +187,7 @@ if __name__ == '__main__':
                         logging.error(f"The average precision@50 for {engine_module} is out of range [0,1].")
                     if recall < 0 or recall > 1:
                         logging.error(f"The average recall for {engine_module} is out of range [0,1].")
-
+                    print(f'map:{results_map}\nrecall:{recall}') # TODO delete
                 if engine_module == 'search_engine_best' and \
                         test_file_exists('idx_bench.pkl'):
                     logging.info('idx_bench.pkl found!')

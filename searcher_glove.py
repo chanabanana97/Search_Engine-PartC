@@ -15,7 +15,7 @@ class SearcherGlove:
         self._ranker_glove = RankerGlove()
         self._model = model
         self.our_data = utils.load_obj("idx")# tuple (index_bench, docs ,num_of_documents)
-        self.SIZE = 500
+        self.SIZE = 1000
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -40,6 +40,8 @@ class SearcherGlove:
         relevant_docs_to_send = list(relevant_docs)
 
         ranked_doc_ids = self._ranker_glove.rank_relevant_docs(relevant_docs_to_send[:self.SIZE], self.our_data, query_as_list, k)
+        # ranked_doc_ids = self._ranker_glove.rank_relevant_docs(relevant_docs_to_send, self.our_data, query_as_list, k)
+
 
         # n_relevant = len(relevant_docs)
         return len(ranked_doc_ids), ranked_doc_ids
@@ -55,8 +57,9 @@ class SearcherGlove:
 
         relevant_docs = {}
         for term in query_as_list:
-            posting_list = self._indexer.get_term_posting_list(term)
-            for doc_id in posting_list:
-                df = relevant_docs.get(doc_id, 0)
-                relevant_docs[doc_id] = df + 1
+            if term in self.our_data[0]:
+                posting_list = self.our_data[0][term][1]
+                for doc_id in posting_list:
+                    df = relevant_docs.get(doc_id, 0)
+                    relevant_docs[doc_id] = df + 1
         return relevant_docs

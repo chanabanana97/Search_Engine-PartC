@@ -3,6 +3,7 @@ from nltk.tokenize import word_tokenize
 import re
 from document import Document
 # from spell_checker import SpellChecker
+from stemmer import Stemmer
 
 
 class Parse:
@@ -210,11 +211,11 @@ class Parse:
         # if self.to_correct_spelling:
         #     new_tokenized_text = self.spell.correct_spelling(new_tokenized_text)
 
-        # if self.stemming is True:
-        #     s = Stemmer()
-        #     for token in new_tokenized_text:
-        #         new_tokenized_text.append(s.stem_term(token))
-        #         new_tokenized_text.remove(token)
+
+        # s = Stemmer()
+        # for token in new_tokenized_text:
+        #     new_tokenized_text.append(s.stem_term(token))
+        #     new_tokenized_text.remove(token)
 
         for term in new_tokenized_text:
             if term is not "":  # or (term.isalpha() and len(term) == 1)
