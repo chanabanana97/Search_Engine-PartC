@@ -11,7 +11,8 @@ class Glove:
         self.doc_value_dict = {}  # key: doc(tweet id), value: avg vector - value of doc
         # glove_file = open('../../../../glove.twitter.27B.25d.txt', encoding="utf8")
         glove_file = open('glove.txt', encoding="utf8")
-        for line in glove_file:
+        lines = glove_file.readlines()[1:]
+        for line in lines:
             records = line.split()
             word = records[0]
             vector = np.asarray(records[1:], dtype='float32')
