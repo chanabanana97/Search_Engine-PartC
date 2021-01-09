@@ -9,9 +9,10 @@ class Glove:
         # self.vectors_for_doc = [np.zeros(25)]
         self.vectors_for_doc = [np.zeros(100)]
         self.doc_value_dict = {}  # key: doc(tweet id), value: avg vector - value of doc
-        glove_file = open('C:\\Users\\elitm\\PycharmProjects\\Search_Engine-PartC\\glove.twitter.27B.25d.txt', encoding="utf8")
-        # glove_file = open('glove.txt', encoding="utf8")
-        for line in glove_file:
+        # glove_file = open('../../../../glove.twitter.27B.25d.txt', encoding="utf8")
+        glove_file = open('glove.txt', encoding="utf8")
+        lines = glove_file.readlines()[1:]
+        for line in lines:
             records = line.split()
             word = records[0]
             vector = np.asarray(records[1:], dtype='float32')
