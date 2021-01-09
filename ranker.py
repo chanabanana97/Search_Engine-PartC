@@ -11,7 +11,7 @@ class Ranker:
         pass
 
     @staticmethod
-    def rank_relevant_docs(relevant_docs, data, query, k=None):
+    def rank_relevant_docs(relevant_docs, data, query,k=None):
         """
         This function provides rank for each relevant document and sorts them by their scores.
         The current score considers solely the number of terms shared by the tweet (full_text) and query.
@@ -35,15 +35,18 @@ class Ranker:
             doc_max = max(term_dict.values())
             try:
                 for term in term_dict:
+                    inverted_idx = data[0][term][0]
                     if term in query:
-                        term_in_query = 1
+                        if inverted_idx<100:
+                            term_in_query = 0.52
+                        else:
+                            term_in_query = 0.48
                     else:
                         term_in_query = 0
-                    inverted_idx = data[0][term][0]
                     posting_dict = data[0][term][1]
                     count_term_in_doc = posting_dict[tweet_id]
                     count_docs_with_term = inverted_idx
-                    tf_idf += ((count_term_in_doc/(doc_len*0.24 + doc_max*0.76)) * math.log((num_of_docs/count_docs_with_term), 2) * term_in_query)
+                    tf_idf += ((count_term_in_doc/(doc_len*0.05 + doc_max*0.95)) * math.log((num_of_docs/count_docs_with_term), 2) * term_in_query)
                     mechane_cos_sim += math.pow((count_term_in_doc/doc_len) * math.log((num_of_docs/count_docs_with_term), 2), 2)
                 if math.sqrt(mechane_cos_sim * query_len) == 0:
                     continue

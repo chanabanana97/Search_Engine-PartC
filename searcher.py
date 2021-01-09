@@ -1,9 +1,6 @@
 from ranker import Ranker
 from spell_checker import Spell_Checker
 import utils
-from thesaurus import Thesaurus
-from word2vec import Word2Vec
-
 
 
 # DO NOT MODIFY CLASS NAME
@@ -36,12 +33,10 @@ class Searcher:
             a list of tweet_ids where the first element is the most relavant 
             and the last is the least relevant result.
         """
+        big_letter =[]
         query_as_list = self._parser.parse_sentence(query)
         if self.method is not None:
             query_as_list = self.method.update(query_as_list)
-            if self.method is Thesaurus:
-                word2vec = Word2Vec()
-                query_as_list = word2vec.update(query_as_list)
             # if self.method is Word2Vec:
             #     thesaurus = Thesaurus()
             #     query_as_list = thesaurus.update(query_as_list)
