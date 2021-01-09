@@ -109,7 +109,7 @@ class Parse:
                     "$": "$", "%": "%",
                     "percentage": "%"}
 
-        similar_words_dict = {"corona":"covid", "covid19":"covid", "coronavirus":"covid", "covid-19":"covid", "covid": "covid"}
+        similar_words_dict = {"corona":"covid", "covid19":"covid", "coronavirus":"covid", "covid-19":"covid", "covid": "covid","#covid": "covid", "#covid19": "covid"}
 
         new_tokenized_text = []
         i = -1

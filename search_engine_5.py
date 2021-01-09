@@ -4,7 +4,7 @@ import pandas as pd
 import utils
 from parser_module import Parse
 from indexer import Indexer
-from searcher_glove import SearcherGlove
+from searcher_glove import Searcher
 
 
 # DO NOT CHANGE THE CLASS NAME
@@ -82,6 +82,6 @@ class SearchEngine:
             and the last is the least relevant result.
         """
 
-        searcher = SearcherGlove(self._parser, self._indexer, model=self._model)
+        searcher = Searcher(self._parser, self._indexer, model=self._model)
         return searcher.search(query)
 

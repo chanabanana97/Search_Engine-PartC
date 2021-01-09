@@ -1,9 +1,9 @@
-from ranker_glove import RankerGlove
+from ranker_glove import Ranker
 import utils
 
 
 # DO NOT MODIFY CLASS NAME
-class SearcherGlove:
+class Searcher:
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit. The model
     # parameter allows you to pass in a precomputed model that is already in
@@ -12,7 +12,7 @@ class SearcherGlove:
     def __init__(self, parser, indexer, model=None):
         self._parser = parser
         self._indexer = indexer
-        self._ranker_glove = RankerGlove()
+        self._ranker_glove = Ranker()
         self._model = model
         self.our_data = utils.load_obj("idx_bench")# tuple (index_bench, docs ,num_of_documents)
         self.SIZE = 500

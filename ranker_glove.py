@@ -3,7 +3,7 @@ from numpy.linalg import norm
 from glove import Glove
 
 
-class RankerGlove:
+class Ranker:
     def __init__(self):
         self.glove = Glove()
 
@@ -23,7 +23,8 @@ class RankerGlove:
 
         query_vector = self.glove.doc_to_vec(query)
         for tweet_id in relevant_docs:
-            docs_as_vectors[tweet_id] = self.glove.doc_to_vec(docs_dict[tweet_id])
+            if tweet_id in docs_as_vectors:
+                docs_as_vectors[tweet_id] = self.glove.doc_to_vec(docs_dict[tweet_id])
 
         docs_to_return = []
         for tweet_id in relevant_docs:

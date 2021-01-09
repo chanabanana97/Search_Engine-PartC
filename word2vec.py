@@ -3,7 +3,7 @@ import gensim.models
 class Word2Vec:
     def __init__(self):
 
-        input_file = 'glove.txt'
+        input_file = 'word2vec.txt'
         self.model = gensim.models.KeyedVectors.load_word2vec_format(input_file, binary=False)
 
     def update(self, array_of_words):

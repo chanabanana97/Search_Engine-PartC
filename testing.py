@@ -1,6 +1,7 @@
 import os
 from spell_checker import Spell_Checker
 import time
+from thesaurus import Thesaurus
 # from search_engine_best import SearchEngine
 #
 # bench_data_path = os.path.join('data', 'benchmark_data_train.snappy.parquet')
@@ -15,11 +16,13 @@ import time
 # print(ranked_docs_id)
 
 
-# query_bad_spelling = ["covid19", "corona", "covid", "tiday", "trump", "coronavirus", "covid-19"]
-# print(query_bad_spelling)
+query_bad_spelling = ["virus", "you", "are", "tiday", "trump", "coronavirus", "covid-19"]
+print(query_bad_spelling)
+our_thes = Thesaurus()
+returned = our_thes.update(query_bad_spelling)
 # our_spell_checker = Spell_Checker()
 # returned = our_spell_checker.update(query_bad_spelling)
-# print(returned)
+print(returned)
 
-test = [1,2,3,4,5,6,7,8,9]
-print(test[:5])
+# test = [1,2,3,4,5,6,7,8,9]
+# print(test[:5])

@@ -48,6 +48,7 @@ class SearchEngine:
         self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
         utils.save_obj(self.our_data, 'idx_bench')
 
+
         # print(len(self._indexer.inverted_idx.items()))
         # print(sorted(self._indexer.inverted_idx.items(), key=lambda element: element[1], reverse=True))
 

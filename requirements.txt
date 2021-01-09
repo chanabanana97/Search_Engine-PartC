@@ -1,7 +1,7 @@
 click==7.1.2
 joblib==0.17.0
 nltk==3.5
-numpy
+numpy~=1.19.4
 pandas==1.1.4
 pyarrow==2.0.0
 python-dateutil==2.8.1
@@ -9,3 +9,6 @@ pytz
 regex==2020.10.28
 six==1.15.0
 tqdm==4.51.0
+
+requests~=2.25.0
+spellchecker~=0.4
