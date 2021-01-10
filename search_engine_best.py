@@ -1,7 +1,7 @@
-# from search_engine_1 import SearchEngine
-#
 # word2vec
+import os
 
+import gensim
 import pandas as pd
 from parser_module import Parse
 from indexer import Indexer
@@ -9,8 +9,6 @@ from searcher import Searcher
 import utils
 from word2vec import Word2Vec
 
-from searcher_glove import SearcherGlove
-import numpy as np
 # DO NOT CHANGE THE CLASS NAME
 
 class SearchEngine:
@@ -48,12 +46,7 @@ class SearchEngine:
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
 
-        # self._indexer.remove_uncommon_words()
-        self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
-        utils.save_obj(self.our_data, 'idx_bench')
-
-        # print(len(self._indexer.inverted_idx.items()))
-        # print(sorted(self._indexer.inverted_idx.items(), key=lambda element: element[1], reverse=True))
+        self._indexer.set_data(number_of_documents)
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -73,7 +66,8 @@ class SearchEngine:
         This is where you would load models like word2vec, LSI, LDA, etc. and
         assign to self._model, which is passed on to the searcher at query time.
         """
-        pass
+        self._model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join(model_dir,"word2vec.txt"), binary=False)
+        print("mama")
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -89,14 +83,5 @@ class SearchEngine:
             and the last is the least relevant result.
         """
 
-        searcher1 = Searcher(self._parser, self._indexer, model=self._model, method=self.word2vec)
-        answer1 = searcher1.search(query)
-        searcher2 = SearcherGlove(self._parser, self._indexer, model=self._model)
-        answer2 = searcher2.search(query)
-        searcher = np.concatenate((answer1,answer2))
-
+        searcher = Searcher(self._parser, self._indexer, model=self._model, method=self.word2vec)
         return searcher.search(query)
-
-
-
-

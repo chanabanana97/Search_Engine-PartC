@@ -10,13 +10,8 @@ class Indexer:
         self.postingDict = {}
         self.idx_bench = {}
         self.config = config
-        # self.is_glove = is_glove
-        # # for glove
-        # if self.is_glove:
-        #     self.docs_as_vectors = {}
-        #     self.glove = Glove()
-        # else:
         self.docs = {}
+        self.data = {}
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -47,17 +42,19 @@ class Indexer:
 
             except:
                 print('problem with the following key {}'.format(term[0]))
-        #
+
         # if self.is_glove:
         #     self.docs_as_vectors[document.tweet_id] = self.glove.doc_to_vec(document_dictionary)
         # else:
 
         self.docs[document.tweet_id] = document_dictionary
-        # self.docs[document.tweet_id] = max(document_dictionary.values()) # max tf
 
     # def add_term_freq(self):
     #     for key in self.postingDict:
     #         self.postingDict[key].append(len(self.postingDict[key]))
+
+    def set_data(self, num_of_docs):
+        self.data = (self.idx_bench, self.docs, num_of_docs)
 
     def remove_uncommon_words(self):
         """
@@ -78,7 +75,9 @@ class Indexer:
         Input:
             fn - file name of pickled index.
         """
-        utils.load_obj(fn)
+        self.data = utils.load_obj(fn)
+        return self.data
+
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -88,7 +87,7 @@ class Indexer:
         Input:
               fn - file name of pickled index.
         """
-        utils.save_obj(fn, "idx_bench") # TODO change after?
+        utils.save_obj(fn, "idx_bench")
 
     # feel free to change the signature and/or implementation of this function 
     # or drop altogether.

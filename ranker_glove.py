@@ -7,7 +7,6 @@ class Ranker:
     def __init__(self):
         self.glove = Glove()
 
-
     # @staticmethod
     def rank_relevant_docs(self, relevant_docs, data, query, k=None):
         """
@@ -23,8 +22,7 @@ class Ranker:
 
         query_vector = self.glove.doc_to_vec(query)
         for tweet_id in relevant_docs:
-            if tweet_id in docs_as_vectors:
-                docs_as_vectors[tweet_id] = self.glove.doc_to_vec(docs_dict[tweet_id])
+            docs_as_vectors[tweet_id] = self.glove.doc_to_vec(docs_dict[tweet_id])
 
         docs_to_return = []
         for tweet_id in relevant_docs:

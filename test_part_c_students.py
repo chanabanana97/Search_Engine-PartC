@@ -12,7 +12,6 @@ if __name__ == '__main__':
 
     logging.basicConfig(filename='part_c_tests.log', level=logging.DEBUG,
                         filemode='w', format='%(levelname)s %(asctime)s: %(message)s')
-    import metrics
 
 
     def test_file_exists(fn):
@@ -40,14 +39,16 @@ if __name__ == '__main__':
 
     start = datetime.now()
     try:
+        import metrics
+
         # is the report there?
-        test_file_exists('report_part_c.docx')
+        # test_file_exists('report_part_c.docx')
         # is benchmark data under 'data' folder?
         bench_lbls = None
         q2n_relevant = None
         if not test_file_exists(bench_data_path) or \
                 not test_file_exists(bench_lbls_path):
-            logging.error("Benchmark data does exist under the 'data' folder.")
+            logging.error("Benchmark data does not exist under the 'data' folder.")
             sys.exit(-1)
         else:
             bench_lbls = pd.read_csv(bench_lbls_path,
@@ -66,6 +67,8 @@ if __name__ == '__main__':
         import configuration
 
         config = configuration.ConfigClass()
+        if hasattr(config, 'model_dir'):
+            config.model_dir = model_dir
 
         # do we need to download a pretrained model?
         model_url = config.get_model_url()
@@ -83,9 +86,8 @@ if __name__ == '__main__':
                 logging.error('model.zip file does not exists.')
 
         # test for each search engine module
-        engine_modules = ['search_engine_' + name for name in ['1', '4']]
-        # engine_modules = ['search_engine_' + name for name in ['1', '2', '3', '4', 'best']]
-        # engine_modules = ['search_engine_4']
+        # engine_modules = ['search_engine_' + name for name in ['1', '2', 'best']]
+        engine_modules = ['search_engine_best']
         for engine_module in engine_modules:
             try:
                 # does the module file exist?
@@ -172,182 +174,6 @@ if __name__ == '__main__':
                         metrics.precision(q_results_labeled.groupby('query').head(10)), \
                         metrics.precision(q_results_labeled.groupby('query').head(50)), \
                         metrics.recall(q_results_labeled, q2n_relevant)
-                    # print("query 1")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 1))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 1))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 1))
-                    # print("query 2")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 2))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 2))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 2))
-                    # print("query 3")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 3))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 3))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 3))
-                    # print("query 4")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 4))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 4))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 4))
-                    # print("query 5")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 5))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 5))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 5))
-                    # print("query 6")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 6))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 6))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 6))
-                    # print("query 7")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 7))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 7))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 7))
-                    # print("query 8")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 8))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 8))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 8))
-                    # print("query 9")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 9))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 9))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 9))
-                    # print("query 10")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 10))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 10))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 10))
-                    # print("query 11")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 11))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 11))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 11))
-                    # print("query 12")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 12))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 12))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 12))
-                    # print("query 13")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 13))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 13))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 13))
-                    # print("query 14")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 14))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 14))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 14))
-                    # print("query 15")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 15))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 15))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 15))
-                    # print("query 16")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 16))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 16))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 16))
-                    # print("query 17")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 17))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 17))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 17))
-                    # print("query 18")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 18))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 18))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 18))
-                    # print("query 19")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 19))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 19))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 19))
-                    # print("query 20")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 20))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 20))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 20))
-                    # print("query 21")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 21))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 21))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 21))
-                    # print("query 22")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 22))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 22))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 22))
-                    # print("query 23")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 23))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 23))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 23))
-                    # print("query 24")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 24))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 24))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 24))
-                    # print("query 25")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 25))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 25))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 25))
-                    # print("query 26")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 26))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 26))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 26))
-                    # print("query 27")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 27))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 27))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 27))
-                    # print("query 28")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 28))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 28))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 28))
-                    # print("query 29")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 29))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 29))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 29))
-                    # print("query 30")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 30))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 30))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 30))
-                    # print("query 31")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 31))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 31))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 31))
-                    # print("query 32")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 32))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 32))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 32))
-                    # print("query 33")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 33))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 33))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 33))
-                    # print("query 34")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 34))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 34))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 34))
-                    # print("query 35")
-                    # print(metrics.precision(q_results_labeled))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(5), True, 35))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(10), True, 35))
-                    # print(metrics.precision(q_results_labeled.groupby('query').head(50), True, 35))
-
                     logging.debug(f"{engine_module} results produced average precision of {prec}.")
                     logging.debug(f"{engine_module} results produced average precision@5 of {p5}.")
                     logging.debug(f"{engine_module} results produced average precision@10 of {p10}.")
@@ -363,12 +189,16 @@ if __name__ == '__main__':
                         logging.error(f"The average precision@50 for {engine_module} is out of range [0,1].")
                     if recall < 0 or recall > 1:
                         logging.error(f"The average recall for {engine_module} is out of range [0,1].")
-                    print(f'map:{results_map}\nrecall:{recall}') # TODO delete
-                if engine_module == 'search_engine_best' and \
-                        test_file_exists('idx_bench.pkl'):
-                    logging.info('idx_bench.pkl found!')
-                    engine.load_index('idx_bench.pkl')
-                    logging.info('Successfully loaded idx_bench.pkl using search_engine_best.')
+
+                if engine_module == 'search_engine_best':
+                    paths = ['idx_bench.pkl', os.path.join(model_dir, 'idx_bench.pkl')]
+                    idx_path = next((p for p in paths if os.path.exists(p)), None)
+                    if idx_path is not None:
+                        logging.info(f'{idx_path} found!')
+                        engine.load_index(idx_path)
+                        logging.info('Successfully loaded idx_bench.pkl using search_engine_best.')
+                    else:
+                        logging.error(f'idx_bench.pkl cannot be found in the current directory or under {model_dir}.')
 
             except Exception as e:
                 logging.error(f'The following error occured while testing the module {engine_module}.')

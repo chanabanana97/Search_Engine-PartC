@@ -37,7 +37,7 @@ class Ranker:
                 for term in term_dict:
                     inverted_idx = data[0][term][0]
                     if term in query:
-                        if inverted_idx<100:
+                        if inverted_idx < 100:
                             term_in_query = 0.52
                         else:
                             term_in_query = 0.48

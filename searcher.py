@@ -1,7 +1,5 @@
 from ranker import Ranker
-from spell_checker import Spell_Checker
 import utils
-
 
 # DO NOT MODIFY CLASS NAME
 class Searcher:
@@ -16,8 +14,7 @@ class Searcher:
         self._ranker = Ranker()
         self._model = model
         self.method = method
-        self.our_data = utils.load_obj("idx_bench")# tuple (index_bench, docs ,num_of_documents)
-
+        self.our_data = self._indexer.data # tuple (index_bench, docs ,num_of_documents)
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -33,13 +30,9 @@ class Searcher:
             a list of tweet_ids where the first element is the most relavant 
             and the last is the least relevant result.
         """
-        big_letter =[]
         query_as_list = self._parser.parse_sentence(query)
         if self.method is not None:
-            query_as_list = self.method.update(query_as_list)
-            # if self.method is Word2Vec:
-            #     thesaurus = Thesaurus()
-            #     query_as_list = thesaurus.update(query_as_list)
+            query_as_list = self.method.update(query_as_list) # query expansion depending on method
 
         relevant_docs = self.relevant_docs_from_posting(query_as_list)
 

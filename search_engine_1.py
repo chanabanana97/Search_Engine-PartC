@@ -44,13 +44,8 @@ class SearchEngine:
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
 
-        # self._indexer.remove_uncommon_words()
-        self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
-        # print(self.our_data)
-        utils.save_obj(self.our_data, 'idx_bench')
+        self._indexer.set_data(number_of_documents)
 
-        # print(len(self._indexer.inverted_idx.items()))
-        # print(sorted(self._indexer.inverted_idx.items(), key=lambda element: element[1], reverse=True))
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

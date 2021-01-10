@@ -43,10 +43,7 @@ class SearchEngine:
             self._indexer.add_new_doc(parsed_document)
         print('Finished parsing and indexing.')
 
-        # self._indexer.add_term_freq()
-        # self._indexer.remove_uncommon_words()
-        self.our_data = (self._indexer.idx_bench, self._indexer.docs, number_of_documents)
-        utils.save_obj(self.our_data, 'idx_bench')
+        self._indexer.set_data(number_of_documents)
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
