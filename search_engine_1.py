@@ -1,10 +1,11 @@
 # word2vec
+import os
 
+import gensim
 import pandas as pd
 from parser_module import Parse
 from indexer import Indexer
 from searcher import Searcher
-import utils
 from word2vec import Word2Vec
 
 # DO NOT CHANGE THE CLASS NAME
@@ -19,7 +20,7 @@ class SearchEngine:
         self._indexer = Indexer(config)
         self._model = None
         self.our_data = ()
-        self.word2vec = Word2Vec()
+        self.word2vec = None
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -46,7 +47,6 @@ class SearchEngine:
 
         self._indexer.set_data(number_of_documents)
 
-
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
     def load_index(self, fn):
@@ -65,7 +65,8 @@ class SearchEngine:
         This is where you would load models like word2vec, LSI, LDA, etc. and
         assign to self._model, which is passed on to the searcher at query time.
         """
-        pass
+        self._model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join(model_dir,"word2vec.txt"), binary=False)
+        self.word2vec = Word2Vec(self._model)
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
