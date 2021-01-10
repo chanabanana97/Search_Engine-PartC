@@ -1,7 +1,9 @@
 # GLOVE
+import os
+
 import pandas as pd
 
-import utils
+from glove import Glove
 from parser_module import Parse
 from indexer import Indexer
 from searcher_glove import Searcher
@@ -17,8 +19,9 @@ class SearchEngine:
         self._parser = Parse()
         self._indexer = Indexer(config)
         self._model = None
-
         self.our_data = ()
+        self.glove = None
+
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
     def build_index_from_parquet(self, fn):
@@ -62,7 +65,9 @@ class SearchEngine:
         This is where you would load models like word2vec, LSI, LDA, etc. and
         assign to self._model, which is passed on to the searcher at query time.
         """
-        pass
+        file = open(os.path.join(model_dir,'glove.txt'), encoding="utf8")
+        self._model = Glove(glove_file=file)
+
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

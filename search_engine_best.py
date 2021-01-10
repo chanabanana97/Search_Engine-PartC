@@ -21,7 +21,7 @@ class SearchEngine:
         self._indexer = Indexer(config)
         self._model = None
         self.our_data = ()
-        self.word2vec = Word2Vec()
+        self.word2vec = None
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.
@@ -67,7 +67,7 @@ class SearchEngine:
         assign to self._model, which is passed on to the searcher at query time.
         """
         self._model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join(model_dir,"word2vec.txt"), binary=False)
-        print("mama")
+        self.word2vec = Word2Vec(self._model)
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

@@ -1,5 +1,5 @@
+from glove import Glove
 from ranker_glove import Ranker
-import utils
 
 
 # DO NOT MODIFY CLASS NAME
@@ -12,10 +12,10 @@ class Searcher:
     def __init__(self, parser, indexer, model=None):
         self._parser = parser
         self._indexer = indexer
-        self._ranker_glove = Ranker()
         self._model = model
-        self.our_data = self._indexer.data# tuple (index_bench, docs ,num_of_documents)
-        self.SIZE = 500
+        self._ranker_glove = Ranker(self._model)
+        self.our_data = self._indexer.data # tuple (index_bench, docs ,num_of_documents)
+        self.SIZE = 400
 
     # DO NOT MODIFY THIS SIGNATURE
     # You can change the internal implementation as you see fit.

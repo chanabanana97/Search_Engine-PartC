@@ -2,12 +2,11 @@ import numpy as np
 
 
 class Glove:
-    def __init__(self):
+    def __init__(self, glove_file):
         self.vector_dict = {}
         self.vectors_for_doc = [np.zeros(100)]
         self.doc_value_dict = {}  # key: doc(tweet id), value: avg vector - value of doc
 
-        glove_file = open('glove.txt', encoding="utf8")
         lines = glove_file.readlines()[1:]
         for line in lines:
             records = line.split()

@@ -4,8 +4,8 @@ from glove import Glove
 
 
 class Ranker:
-    def __init__(self):
-        self.glove = Glove()
+    def __init__(self, glove):
+        self.glove = glove
 
     # @staticmethod
     def rank_relevant_docs(self, relevant_docs, data, query, k=None):

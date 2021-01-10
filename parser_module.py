@@ -1,21 +1,14 @@
-import string
 from nltk.tokenize import word_tokenize
 import re
 from document import Document
-from spell_checker import Spell_Checker
-from stemmer import Stemmer
-
 
 class Parse:
 
     def __init__(self):
-        # self.stemming = stem
+
         with open('stop_words.txt', 'r') as f:
             self.our_stop_words = f.read().splitlines()
         self.stop_words_dict = {key: None for key in self.our_stop_words}
-        # self.to_correct_spelling = to_correct_spelling
-        # if to_correct_spelling:  # spell checker
-        # self.spell = Spell_Checker()
 
     def handle_hashtag(self, hashtag_str: str):
         glue = ' '
@@ -41,30 +34,6 @@ class Parse:
         if num >= b:
             return str(int(num / b)) + "B"
 
-
-    # def handle_tags(self, tag_string):
-    #     return "@" + tag_string
-
-
-    # def upper_or_lower(self, word_to_check):
-    #     if word_to_check[0].isupper():
-    #         self.uppercase_dict[word_to_check[0]].add(word_to_check)
-    #         return str.upper(word_to_check)
-    #     return word_to_check
-
-
-    # def handle_url(self, url_token: str):
-    #     if url_token is None or url_token.startswith("//t"):
-    #         return []
-    #     url_arr_to_return = []
-    #     url_token = url_token[8:]
-    #     url_arr = re.split('=|/|:|#|%|&', url_token)
-    #     for tok in url_arr[1:]:
-    #         if tok.__contains__('-'):
-    #             url_arr_to_return.extend(tok.split('-'))
-    #     url_arr_to_return.append(url_arr[0])
-    #     return url_arr_to_return
-
     # our rule 1: remove emojis from tweets
     def remove_emojis(self, txt):
         re_emoji = re.compile("["
@@ -74,16 +43,6 @@ class Parse:
                               "]+", flags=re.UNICODE)
         word = re_emoji.sub(r'', txt)
         return word
-
-    # def handle_entity(self, txt):
-    #     entity =""
-    #     for word in txt:
-    #         if word[0].isupper():
-    #             entity += word + " "
-    #         else:
-    #             break
-    #     return entity
-
 
     def parse_sentence(self, text):
         """
@@ -161,11 +120,6 @@ class Parse:
             else:
                 new_tokenized_text.append(term.lower())
 
-        # best_tokenized_text = []
-        # for w in new_tokenized_text:
-        #     if w.lower() not in self.stop_words_dict:
-        #         best_tokenized_text.append(w)
-        # return best_tokenized_text
         return new_tokenized_text
 
     def parse_doc(self, doc_as_list):
@@ -204,11 +158,6 @@ class Parse:
         # spell checker
         # new_tokenized_text = self.spell.update(new_tokenized_text)
 
-        # s = Stemmer()
-        # for token in new_tokenized_text:
-        #     new_tokenized_text.append(s.stem_term(token))
-        #     new_tokenized_text.remove(token)
-
         for term in new_tokenized_text:
             if term is not "":  # or (term.isalpha() and len(term) == 1)
                 if term not in term_dict:
@@ -219,31 +168,3 @@ class Parse:
         document = Document(tweet_id, tweet_date, full_text, url, retweet_text, retweet_url, quote_text,
                             quote_url, term_dict, doc_length)
         return document
-
-
-
-    # def remove_uppercase_and_entities(self, indexer):
-    #     word_in_lower_and_upper = []
-    #     inverted_idx = indexer.inverted_idx
-    #
-    #     # check if word whom found in upper case also found in lower. if yes - remove from posting files (and inverted index)
-    #     for letter in self.uppercase_dict:
-    #         upper_to_lower_words = [x.lower() for x in list(self.uppercase_dict[letter])]
-    #         for word in upper_to_lower_words:
-    #             if word in inverted_idx:
-    #                 word_in_lower_and_upper.append(word)
-    #
-    #         letter_posting_file = utils.load_obj(indexer.out + letter.lower())
-    #         for word in word_in_lower_and_upper:
-    #             if word in letter_posting_file and word.upper() in letter_posting_file:
-    #                 word_appearance = letter_posting_file[word.upper()]
-    #                 letter_posting_file[word].extend(word_appearance)
-    #                 del letter_posting_file[word.upper()]
-    #                 del inverted_idx[word.upper()]
-    #
-    #         # entities - check if they appear at least twice. if not - remove from posting files (and inverted index)
-    #         for entity in self.entities_dict[letter]:
-    #             if entity in letter_posting_file and len(letter_posting_file[entity]) < 2:
-    #                 del letter_posting_file[entity]
-    #                 del inverted_idx[entity]
-    #         utils.save_obj(letter_posting_file, indexer.out + letter)

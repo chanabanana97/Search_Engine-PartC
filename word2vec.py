@@ -1,10 +1,8 @@
-import gensim.models
+# import gensim.models
 
 class Word2Vec:
-    def __init__(self):
-
-        input_file = 'word2vec.txt'
-        self.model = gensim.models.KeyedVectors.load_word2vec_format(input_file, binary=False)
+    def __init__(self, model):
+        self.model = model
 
     def update(self, array_of_words):
         similar_words = set(array_of_words)

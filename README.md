@@ -1,3 +1,2 @@
 # Search_Engine
-The is a skeleton of a search engine project for your convenience.
-Please follow the instructions provided in the file: intructions.txt
+search engine with multiple different IR methods. including: word2vec, gloVe, thesaurus...
